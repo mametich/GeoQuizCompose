@@ -58,6 +58,7 @@ fun QuizComposeApp(
         },
         onClickPreviousQuestionButton = { mainScreenViewModel.previousQuestion() },
         onClickNextQuestionButton = { mainScreenViewModel.nextQuestion() },
+        onClickToCheatScreen = { },
         modifier = Modifier
     )
 }
@@ -69,6 +70,7 @@ fun TextWithButtons(
     onClickFalseButton: () -> Unit,
     onClickNextQuestionButton: () -> Unit,
     onClickPreviousQuestionButton: () -> Unit,
+    onClickToCheatScreen: () -> Unit,
     modifier: Modifier
 ) {
     Column(
@@ -142,6 +144,15 @@ fun TextWithButtons(
                 }
             }
         }
+        Button(
+            onClick = onClickToCheatScreen,
+            shape = RoundedCornerShape(16.dp)
+        ) {
+            Text(
+                text = stringResource(R.string.cheat_button).uppercase(),
+                fontSize = 18.sp
+            )
+        }
     }
 }
 
@@ -155,6 +166,7 @@ fun QuizComposeAppPreview() {
         onClickFalseButton = {},
         onClickPreviousQuestionButton = {},
         onClickNextQuestionButton = {},
+        onClickToCheatScreen = {},
         modifier = Modifier
     )
 }
