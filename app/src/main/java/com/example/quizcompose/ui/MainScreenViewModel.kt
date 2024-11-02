@@ -39,7 +39,6 @@ class MainScreenViewModel : ViewModel() {
         }
     }
 
-
     fun previousQuestion() {
         currentIndex = (currentIndex + questionBank.size - 1) % questionBank.size
         val previousQuestion = questionBank[currentIndex].textQuestion
@@ -49,6 +48,11 @@ class MainScreenViewModel : ViewModel() {
             )
         }
     }
+
+    fun showAnswerText(isAnswerTrue: Boolean) {
+
+    }
+
 
     fun checkAnswer(userAnswer: Boolean): Int {
         return if (userAnswer == questionBank[currentIndex].answer) {

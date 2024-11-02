@@ -18,17 +18,9 @@ import androidx.compose.ui.unit.sp
 import com.example.quizcompose.R
 
 @Composable
-fun CheatScreen() {
-    CheatsTextAndButton(
-        warningText = stringResource(R.string.warning_text),
-        answer = "True".uppercase(),
-        onClickButtonShowAnswer = {}
-    )
-}
-
-@Composable
-fun CheatsTextAndButton(
+fun CheatScreen(
     warningText: String,
+    answerIsTrue: Boolean,
     answer: String,
     onClickButtonShowAnswer: () -> Unit,
     modifier: Modifier = Modifier
@@ -62,13 +54,13 @@ fun CheatsTextAndButton(
     }
 }
 
-
 @Preview(showSystemUi = true)
 @Composable
 fun CheatsTextAndButtonPreview() {
-    CheatsTextAndButton(
+    CheatScreen(
         warningText = stringResource(R.string.warning_text),
+        answerIsTrue = false,
         answer = "True".uppercase(),
-        onClickButtonShowAnswer = {}
+        onClickButtonShowAnswer = { }
     )
 }
