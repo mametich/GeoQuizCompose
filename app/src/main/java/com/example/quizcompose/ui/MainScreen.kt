@@ -32,46 +32,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.example.quizcompose.R
 
 @Composable
-fun QuizComposeApp(
-    mainScreenViewModel: MainScreenViewModel = viewModel()
-) {
-    val quizUiState by mainScreenViewModel.quizUiState.collectAsState()
-    val context = LocalContext.current
-    TextWithButtons(
-        questionText = quizUiState.questionText,
-        onClickTrueButton = {
-            Toast.makeText(
-                context,
-                mainScreenViewModel.checkAnswer(true),
-                Toast.LENGTH_SHORT)
-                .show()
-        },
-        onClickFalseButton = {
-            Toast.makeText(
-                context,
-                mainScreenViewModel.checkAnswer(false),
-                Toast.LENGTH_SHORT)
-                .show()
-        },
-        onClickPreviousQuestionButton = { mainScreenViewModel.previousQuestion() },
-        onClickNextQuestionButton = { mainScreenViewModel.nextQuestion() },
-        onClickToCheatScreen = { },
-        modifier = Modifier
-    )
-}
-
-@Composable
-fun TextWithButtons(
+fun MainScreen(
     questionText: String,
     onClickTrueButton: () -> Unit,
     onClickFalseButton: () -> Unit,
     onClickNextQuestionButton: () -> Unit,
     onClickPreviousQuestionButton: () -> Unit,
     onClickToCheatScreen: () -> Unit,
-    modifier: Modifier
+    modifier: Modifier = Modifier
 ) {
     Column(
         verticalArrangement = Arrangement.Center,
@@ -160,7 +132,7 @@ fun TextWithButtons(
 @Preview(showSystemUi = true)
 @Composable
 fun QuizComposeAppPreview() {
-    TextWithButtons(
+    MainScreen(
         questionText = "Canberra is the capital of Australia.",
         onClickTrueButton = {},
         onClickFalseButton = {},
