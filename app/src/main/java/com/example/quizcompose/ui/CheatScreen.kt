@@ -1,5 +1,6 @@
 package com.example.quizcompose.ui
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -19,9 +20,9 @@ import com.example.quizcompose.R
 
 @Composable
 fun CheatScreen(
+    isTextVisible: Boolean,
     warningText: String,
-    answerIsTrue: Boolean,
-    answer: String,
+    answerText: String,
     onClickButtonShowAnswer: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -38,11 +39,13 @@ fun CheatScreen(
             modifier = Modifier.padding(24.dp),
             textAlign = TextAlign.Center
         )
-        Text(
-            text = answer,
-            fontSize = 18.sp,
-            modifier = Modifier.padding(24.dp)
-        )
+        if (isTextVisible) {
+            Text(
+                text = answerText,
+                fontSize = 18.sp,
+                modifier = Modifier.padding(24.dp)
+            )
+        }
         Button(
             onClick = onClickButtonShowAnswer
         ) {
@@ -59,8 +62,8 @@ fun CheatScreen(
 fun CheatsTextAndButtonPreview() {
     CheatScreen(
         warningText = stringResource(R.string.warning_text),
-        answerIsTrue = false,
-        answer = "True".uppercase(),
-        onClickButtonShowAnswer = { }
+        onClickButtonShowAnswer = { },
+        answerText = "0",
+        isTextVisible = false
     )
 }

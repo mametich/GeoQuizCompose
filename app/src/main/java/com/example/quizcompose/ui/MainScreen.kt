@@ -34,6 +34,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.quizcompose.R
+import com.example.quizcompose.data.Question
+import com.example.quizcompose.data.questionBank
 
 @Composable
 fun MainScreen(
@@ -117,7 +119,7 @@ fun MainScreen(
             }
         }
         Button(
-            onClick = onClickToCheatScreen,
+            onClick = { onClickToCheatScreen() },
             shape = RoundedCornerShape(16.dp)
         ) {
             Text(
@@ -139,6 +141,6 @@ fun QuizComposeAppPreview() {
         onClickPreviousQuestionButton = {},
         onClickNextQuestionButton = {},
         onClickToCheatScreen = {},
-        modifier = Modifier
+        modifier = Modifier,
     )
 }
