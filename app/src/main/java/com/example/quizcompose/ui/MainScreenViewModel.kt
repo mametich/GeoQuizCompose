@@ -20,11 +20,22 @@ class MainScreenViewModel : ViewModel() {
         takeFirstQuestion()
     }
 
-    private fun takeFirstQuestion() {
-        val questionText = questionBank[currentIndex].textQuestion
+    fun showVisibility() {
         _quizUiState.update { currentState ->
             currentState.copy(
-                questionText = questionText
+                isVisible = true
+            )
+        }
+    }
+
+    private fun takeFirstQuestion() {
+        val questionText = questionBank[currentIndex].textQuestion
+        val questionAnswer = questionBank[currentIndex].answer
+        _quizUiState.update { currentState ->
+            currentState.copy(
+                questionText = questionText,
+                answerIsTrue = questionAnswer,
+                answerText = questionAnswer.toString().uppercase()
             )
         }
     }
@@ -32,9 +43,12 @@ class MainScreenViewModel : ViewModel() {
     fun nextQuestion() {
         currentIndex = (currentIndex + 1) % questionBank.size
         val nextQuestion = questionBank[currentIndex].textQuestion
+        val questionAnswer = questionBank[currentIndex].answer
         _quizUiState.update { currentState ->
             currentState.copy(
-                questionText = nextQuestion
+                questionText = nextQuestion,
+                answerIsTrue = questionAnswer,
+                answerText = questionAnswer.toString().uppercase()
             )
         }
     }
@@ -42,17 +56,15 @@ class MainScreenViewModel : ViewModel() {
     fun previousQuestion() {
         currentIndex = (currentIndex + questionBank.size - 1) % questionBank.size
         val previousQuestion = questionBank[currentIndex].textQuestion
+        val questionAnswer = questionBank[currentIndex].answer
         _quizUiState.update { currentState ->
             currentState.copy(
-                questionText = previousQuestion
+                questionText = previousQuestion,
+                answerIsTrue = questionAnswer,
+                answerText = questionAnswer.toString().uppercase()
             )
         }
     }
-
-    fun showAnswerText(isAnswerTrue: Boolean) {
-
-    }
-
 
     fun checkAnswer(userAnswer: Boolean): Int {
         return if (userAnswer == questionBank[currentIndex].answer) {
