@@ -21,47 +21,46 @@ class MainScreenViewModel : ViewModel() {
     }
 
     fun showVisibility() {
-        _quizUiState.update { currentState ->
-            currentState.copy(
-                isVisible = true
-            )
+        if (_quizUiState.value.isVisible) {
+            _quizUiState.update { currentState ->
+                currentState.copy(
+                    isVisible = false
+                )
+            }
+        } else {
+            _quizUiState.update { currentState ->
+                currentState.copy(
+                    isVisible = true
+                )
+            }
         }
     }
 
     private fun takeFirstQuestion() {
-        val questionText = questionBank[currentIndex].textQuestion
-        val questionAnswer = questionBank[currentIndex].answer
         _quizUiState.update { currentState ->
             currentState.copy(
-                questionText = questionText,
-                answerIsTrue = questionAnswer,
-                answerText = questionAnswer.toString().uppercase()
+                questionText = questionBank[currentIndex].textQuestion,
+                answerText = questionBank[currentIndex].answer.toString().uppercase()
             )
         }
     }
 
     fun nextQuestion() {
         currentIndex = (currentIndex + 1) % questionBank.size
-        val nextQuestion = questionBank[currentIndex].textQuestion
-        val questionAnswer = questionBank[currentIndex].answer
         _quizUiState.update { currentState ->
             currentState.copy(
-                questionText = nextQuestion,
-                answerIsTrue = questionAnswer,
-                answerText = questionAnswer.toString().uppercase()
+                questionText = questionBank[currentIndex].textQuestion,
+                answerText = questionBank[currentIndex].answer.toString().uppercase()
             )
         }
     }
 
     fun previousQuestion() {
         currentIndex = (currentIndex + questionBank.size - 1) % questionBank.size
-        val previousQuestion = questionBank[currentIndex].textQuestion
-        val questionAnswer = questionBank[currentIndex].answer
         _quizUiState.update { currentState ->
             currentState.copy(
-                questionText = previousQuestion,
-                answerIsTrue = questionAnswer,
-                answerText = questionAnswer.toString().uppercase()
+                questionText = questionBank[currentIndex].textQuestion,
+                answerText = questionBank[currentIndex].answer.toString().uppercase()
             )
         }
     }
