@@ -4,6 +4,7 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -39,16 +40,23 @@ sealed class Screen(val route: String) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun QuizComposeAppBar(
+    title: String,
     canNavigateBack: Boolean,
     navigateUp: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     TopAppBar(
-        title = { Text(stringResource(R.string.app_name)) },
+        title = { Text(text = title) },
+        colors = TopAppBarDefaults.mediumTopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            titleContentColor = MaterialTheme.colorScheme.primary
+        ),
         modifier = modifier,
         navigationIcon = {
             if (canNavigateBack) {
-                IconButton(onClick = navigateUp) {
+                IconButton(
+                    onClick = navigateUp
+                ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Default.ArrowBack,
                         contentDescription = "Back"
@@ -59,7 +67,6 @@ fun QuizComposeAppBar(
     )
 }
 
-
 @Composable
 fun QuizComposeApp(
     mainScreenViewModel: MainScreenViewModel = viewModel(),
@@ -67,12 +74,17 @@ fun QuizComposeApp(
 ) {
 
     val backStackEntry by navHostController.currentBackStackEntryAsState()
+    val currentRoute = backStackEntry?.destination?.route ?: Screen.MainScreen.route
 
     Scaffold(
         topBar = {
             QuizComposeAppBar(
+                title = currentRoute,
                 canNavigateBack = navHostController.previousBackStackEntry != null,
-                navigateUp = { navHostController.navigateUp() }
+                navigateUp = {
+                    mainScreenViewModel.showVisibility()
+                    navHostController.navigateUp()
+                }
             )
         }
     ) { innerPadding ->
@@ -121,18 +133,6 @@ fun QuizComposeApp(
                 )
             }
         }
-
     }
-
-
-
-
-
-
-
-
-
-
-
 }
 
